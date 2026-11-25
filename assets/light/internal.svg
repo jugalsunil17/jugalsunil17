@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="258" viewBox="0 0 840 258" role="img">
+<style>
+.sans{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', 'Hiragino Sans', Helvetica, Arial, sans-serif;}
+.mono{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;}
+</style>
+<rect x="0" y="2" width="360" height="26" rx="6" fill="#ffffff"/><text x="4" y="20" class="mono" font-size="13" fill="#59636e">internal tools for Akatsuki AI Technologies</text>
+<g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.000;1" dur="0.50s" fill="freeze"/>
+<rect x="1.0" y="34" width="271.3" height="222" rx="14" fill="#f6f8fa" stroke="#d0d7de"/>
+<rect x="1.0" y="50" width="4" height="26" rx="2" fill="#0f766e"/>
+<text x="19.0" y="70" class="sans" font-size="16.5" font-weight="700" fill="#1f2328">Akatsuki Artifacts</text>
+<text x="19.0" y="98" class="sans" font-size="13.5" fill="#59636e"><tspan x="19.0" dy="0">Workspace where reports and pages</tspan><tspan x="19.0" dy="19">made with Claude are saved,</tspan><tspan x="19.0" dy="19">versioned and shared by link, with</tspan><tspan x="19.0" dy="19">an MCP server so Claude can update</tspan><tspan x="19.0" dy="19">them later. Main contributor.</tspan></text>
+<rect x="19.0" y="216" width="69.9" height="24.5" rx="12.2" fill="#eef2ff" stroke="#c7d2fe"/><text x="54.0" y="232.4" text-anchor="middle" class="mono" font-size="11.5" fill="#4f46e5">Next.js</text><rect x="94.9" y="216" width="41.4" height="24.5" rx="12.2" fill="#eef2ff" stroke="#c7d2fe"/><text x="115.6" y="232.4" text-anchor="middle" class="mono" font-size="11.5" fill="#4f46e5">MCP</text><rect x="142.3" y="216" width="84.2" height="24.5" rx="12.2" fill="#eef2ff" stroke="#c7d2fe"/><text x="184.4" y="232.4" text-anchor="middle" class="mono" font-size="11.5" fill="#4f46e5">Cloud Run</text>
+</g>
+<g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.231;1" dur="0.65s" fill="freeze"/>
+<rect x="284.3" y="34" width="271.3" height="222" rx="14" fill="#f6f8fa" stroke="#d0d7de"/>
+<rect x="284.3" y="50" width="4" height="26" rx="2" fill="#0f766e"/>
+<text x="302.3" y="70" class="sans" font-size="16.5" font-weight="700" fill="#1f2328">Daily Report Tracker</text>
+<text x="302.3" y="98" class="sans" font-size="13.5" fill="#59636e"><tspan x="302.3" dy="0">Checks daily reports in Slack for</tspan><tspan x="302.3" dy="19">about 40 staff in Japan and India,</tspan><tspan x="302.3" dy="19">logs them to Google Sheets, sends</tspan><tspan x="302.3" dy="19">reminders and an HR summary, plus a</tspan><tspan x="302.3" dy="19">Gemini review of each report.</tspan></text>
+<rect x="302.3" y="216" width="98.4" height="24.5" rx="12.2" fill="#eef2ff" stroke="#c7d2fe"/><text x="351.5" y="232.4" text-anchor="middle" class="mono" font-size="11.5" fill="#4f46e5">Apps Script</text><rect x="406.8" y="216" width="55.6" height="24.5" rx="12.2" fill="#eef2ff" stroke="#c7d2fe"/><text x="434.6" y="232.4" text-anchor="middle" class="mono" font-size="11.5" fill="#4f46e5">Slack</text><rect x="468.4" y="216" width="62.8" height="24.5" rx="12.2" fill="#eef2ff" stroke="#c7d2fe"/><text x="499.8" y="232.4" text-anchor="middle" class="mono" font-size="11.5" fill="#4f46e5">Gemini</text>
+</g>
+<g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.375;1" dur="0.80s" fill="freeze"/>
+<rect x="567.7" y="34" width="271.3" height="222" rx="14" fill="#f6f8fa" stroke="#d0d7de"/>
+<rect x="567.7" y="50" width="4" height="26" rx="2" fill="#0f766e"/>
+<text x="585.7" y="70" class="sans" font-size="16.5" font-weight="700" fill="#1f2328">Akatsuki Workbench</text>
+<text x="585.7" y="98" class="sans" font-size="13.5" fill="#59636e"><tspan x="585.7" dy="0">Internal tracker for team projects,</tspan><tspan x="585.7" dy="19">APIs and tasks, with login,</tspan><tspan x="585.7" dy="19">role-based access and an in-browser</tspan><tspan x="585.7" dy="19">page editor. Prototype, not deployed</tspan><tspan x="585.7" dy="19">yet.</tspan></text>
+<rect x="585.7" y="216" width="69.9" height="24.5" rx="12.2" fill="#eef2ff" stroke="#c7d2fe"/><text x="620.6" y="232.4" text-anchor="middle" class="mono" font-size="11.5" fill="#4f46e5">Next.js</text><rect x="661.6" y="216" width="62.8" height="24.5" rx="12.2" fill="#eef2ff" stroke="#c7d2fe"/><text x="693.0" y="232.4" text-anchor="middle" class="mono" font-size="11.5" fill="#4f46e5">Prisma</text><rect x="730.4" y="216" width="98.4" height="24.5" rx="12.2" fill="#eef2ff" stroke="#c7d2fe"/><text x="779.6" y="232.4" text-anchor="middle" class="mono" font-size="11.5" fill="#4f46e5">better-auth</text>
+</g>
+</svg>

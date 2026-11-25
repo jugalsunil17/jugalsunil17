@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="412" height="206" viewBox="0 0 412 206" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="170" viewBox="0 0 840 170" role="img">
 <style>
 .sans{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', 'Hiragino Sans', Helvetica, Arial, sans-serif;}
 .mono{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;}
 </style>
 
-<rect x="1" y="1" width="410" height="194" rx="14" fill="#f6f8fa" stroke="#d0d7de"/>
+<rect x="1" y="1" width="838" height="158" rx="14" fill="#f6f8fa" stroke="#d0d7de"/>
 <text x="20" y="38" class="sans" font-size="17.5" font-weight="700" fill="#1f2328">PharmaIQ</text>
-<rect x="285.6" y="20" width="108.4" height="24" rx="12" fill="none" stroke="#d0d7de"/>
-<circle cx="297.6" cy="32" r="4" fill="#d9480f"><animate attributeName="opacity" values="1;0.2;1" dur="1.6s" repeatCount="indefinite"/></circle>
-<text x="344.8" y="36" text-anchor="middle" class="mono" font-size="11.5" fill="#59636e">in progress</text>
-<text x="20" y="72" class="sans" font-size="14" fill="#59636e"><tspan x="20" dy="0">Early stage. Building a RAG + multi-agent</tspan><tspan x="20" dy="20">research assistant over public drug data</tspan><tspan x="20" dy="20">(openFDA, ClinicalTrials.gov) with cited</tspan><tspan x="20" dy="20">answers. Planned stack:</tspan></text>
-<rect x="20.0" y="152" width="94.4" height="25" rx="12.5" fill="#eef2ff" stroke="#c7d2fe"/><text x="67.2" y="168.8" text-anchor="middle" class="mono" font-size="12" fill="#4f46e5">Databricks</text><rect x="121.4" y="152" width="87.0" height="25" rx="12.5" fill="#eef2ff" stroke="#c7d2fe"/><text x="164.9" y="168.8" text-anchor="middle" class="mono" font-size="12" fill="#4f46e5">LangGraph</text><rect x="215.4" y="152" width="72.1" height="25" rx="12.5" fill="#eef2ff" stroke="#c7d2fe"/><text x="251.4" y="168.8" text-anchor="middle" class="mono" font-size="12" fill="#4f46e5">AutoGen</text><rect x="294.4" y="152" width="72.1" height="25" rx="12.5" fill="#eef2ff" stroke="#c7d2fe"/><text x="330.5" y="168.8" text-anchor="middle" class="mono" font-size="12" fill="#4f46e5">Bedrock</text>
+<rect x="713.6" y="20" width="108.4" height="24" rx="12" fill="none" stroke="#d0d7de"/>
+<circle cx="725.6" cy="32" r="4" fill="#d9480f"><animate attributeName="opacity" values="1;0.2;1" dur="1.6s" repeatCount="indefinite"/></circle>
+<text x="772.8" y="36" text-anchor="middle" class="mono" font-size="11.5" fill="#59636e">in progress</text>
+<text x="20" y="72" class="sans" font-size="14" fill="#59636e"><tspan x="20" dy="0">Early stage. Building a RAG + multi-agent research assistant over public drug data (openFDA,</tspan><tspan x="20" dy="20">ClinicalTrials.gov) with cited answers. Planned stack:</tspan></text>
+<rect x="20.0" y="116" width="94.4" height="25" rx="12.5" fill="#eef2ff" stroke="#c7d2fe"/><text x="67.2" y="132.8" text-anchor="middle" class="mono" font-size="12" fill="#4f46e5">Databricks</text><rect x="121.4" y="116" width="87.0" height="25" rx="12.5" fill="#eef2ff" stroke="#c7d2fe"/><text x="164.9" y="132.8" text-anchor="middle" class="mono" font-size="12" fill="#4f46e5">LangGraph</text><rect x="215.4" y="116" width="72.1" height="25" rx="12.5" fill="#eef2ff" stroke="#c7d2fe"/><text x="251.4" y="132.8" text-anchor="middle" class="mono" font-size="12" fill="#4f46e5">AutoGen</text><rect x="294.4" y="116" width="72.1" height="25" rx="12.5" fill="#eef2ff" stroke="#c7d2fe"/><text x="330.5" y="132.8" text-anchor="middle" class="mono" font-size="12" fill="#4f46e5">Bedrock</text>
 
 </svg>

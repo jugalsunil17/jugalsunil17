@@ -16,14 +16,19 @@
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/h2.svg"/><img src="assets/light/h2.svg" alt="02 work projects"/></picture>
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/work.svg"/><img src="assets/light/work.svg" alt="Work projects: agentic marketing AI platform, agentic HR automation, GenAI campaign generator PoC, real-time speech translation, sales AI agent infrastructure, retail shelf proposal AI"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/internal.svg"/><img src="assets/light/internal.svg" alt="Internal tools for Akatsuki AI Technologies: Akatsuki Artifacts, Daily Report Tracker, Akatsuki Workbench"/></picture>
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/h3.svg"/><img src="assets/light/h3.svg" alt="03 personal projects"/></picture>
 
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/project-pharmaiq.svg"/><img src="assets/light/project-pharmaiq.svg" alt="PharmaIQ: RAG and multi-agent research assistant over public drug data, early stage"/></picture>
+
 <p align="center">
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/project-pharmaiq.svg"/><img src="assets/light/project-pharmaiq.svg" alt="PharmaIQ: RAG and multi-agent research assistant over public drug data, early stage" width="49%"/></picture>
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/project-drone.svg"/><img src="assets/light/project-drone.svg" alt="Drone Show 3D Generation: 2D image to 3D drone flight data with local AI models" width="49%"/></picture>
 <a href="https://github.com/jugalsunil17/Unitree_Go2_Project"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/project-go2.svg"/><img src="assets/light/project-go2.svg" alt="Unitree Go2 Object Detection with YOLOv8 and OpenCV" width="49%"/></picture></a>
 <a href="https://github.com/jugalsunil17/flask-task-manager-api"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/project-taskmgr.svg"/><img src="assets/light/project-taskmgr.svg" alt="Task Manager API with Flask, SQLAlchemy and SQLite" width="49%"/></picture></a>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/project-drone.svg"/><img src="assets/light/project-drone.svg" alt="Drone Show 3D Generation: 2D image to 3D drone flight data with local AI models" width="49%"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/project-slack.svg"/><img src="assets/light/project-slack.svg" alt="Slack Watcher Agent: Claude triage, model routing and Telegram alerts" width="49%"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/project-docskills.svg"/><img src="assets/light/project-docskills.svg" alt="Document Skills for Agents: DOCX, PDF, PPTX and XLSX skills" width="49%"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/project-sheetmail.svg"/><img src="assets/light/project-sheetmail.svg" alt="Sheet-to-Email Agent: Google ADK practice agent with RAG and human approval" width="49%"/></picture>
 </p>
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/h4.svg"/><img src="assets/light/h4.svg" alt="04 stack"/></picture>

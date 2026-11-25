@@ -352,6 +352,47 @@ def build_work(t):
     return svg(W, H, "".join(out))
 
 
+# ---------------------------------------------------------------- internal tools (Akatsuki, description only)
+INTERNAL = [
+    ("Akatsuki Artifacts",
+     "Workspace where reports and pages made with Claude are saved, versioned and shared by link, with an MCP server so Claude can update them later. Main contributor.",
+     ["Next.js", "MCP", "Cloud Run"]),
+    ("Daily Report Tracker",
+     "Checks daily reports in Slack for about 40 staff in Japan and India, logs them to Google Sheets, sends reminders and an HR summary, plus a Gemini review of each report.",
+     ["Apps Script", "Slack", "Gemini"]),
+    ("Akatsuki Workbench",
+     "Internal tracker for team projects, APIs and tasks, with login, role-based access and an in-browser page editor. Prototype, not deployed yet.",
+     ["Next.js", "Prisma", "better-auth"]),
+]
+
+
+def build_internal(t):
+    gap, ch, top = 12, 222, 34
+    cw = (W - 2 - 2 * gap) / 3
+    H = top + ch + 2
+    out = [f'<rect x="0" y="2" width="360" height="26" rx="6" fill="{t["bg"]}"/>'
+           f'<text x="4" y="20" class="mono" font-size="13" fill="{t["muted"]}">internal tools for Akatsuki AI Technologies</text>']
+    for i, (title, desc, tags) in enumerate(INTERNAL):
+        x = 1 + i * (cw + gap)
+        y = top
+        lines = textwrap.wrap(desc, 36, break_on_hyphens=False)
+        txt = "".join(f'<tspan x="{x+18:.1f}" dy="{0 if j == 0 else 19}">{e(l)}</tspan>' for j, l in enumerate(lines))
+        cx, chips = x + 18, []
+        for tag in tags:
+            c, w = chip(cx, y + ch - 40, tag, t, size=11.5)
+            chips.append(c)
+            cx += w + 6
+        out.append(f'''
+<g>{fade_in(0.15*i, 0.5)}
+{card(f"{x:.1f}", y, f"{cw:.1f}", ch, t)}
+<rect x="{x:.1f}" y="{y+16}" width="4" height="26" rx="2" fill="{t['teal']}"/>
+<text x="{x+18:.1f}" y="{y+36}" class="sans" font-size="16.5" font-weight="700" fill="{t['text']}">{e(title)}</text>
+<text x="{x+18:.1f}" y="{y+64}" class="sans" font-size="13.5" fill="{t['muted']}">{txt}</text>
+{''.join(chips)}
+</g>''')
+    return svg(W, H, "".join(out))
+
+
 # ---------------------------------------------------------------- personal project cards (one SVG each so each can be a link)
 PROJECTS = {
     "pharmaiq": ("PharmaIQ", "in progress",
@@ -366,13 +407,24 @@ PROJECTS = {
     "taskmgr": ("Task Manager API", "repo",
                 "REST API for task management (create, read, update, delete) with Flask, SQLAlchemy and SQLite.",
                 ["Flask", "SQLAlchemy", "SQLite"]),
+    "slack": ("Slack Watcher Agent", "personal",
+              "Polls Slack, a small Claude model triages each message, a simple router picks the right model, and an agent loop handles it with tools. Alerts go to Telegram.",
+              ["Claude API", "Slack SDK", "Telegram"]),
+    "docskills": ("Document Skills for Agents", "personal",
+                  "Agent skills for DOCX, PDF, PPTX and XLSX: create, inspect, redact, merge, render and check documents, built on open-source Python libraries.",
+                  ["python-docx", "pypdf", "Python"]),
+    "sheetmail": ("Sheet-to-Email Agent", "personal",
+                  "Practice agent on Google ADK: reads a row from Google Sheets, drafts an email grounded in a local knowledge base (RAG), and sends only after human approval.",
+                  ["Google ADK", "Gemini", "ChromaDB"]),
 }
 
 
-def build_project(t, key):
+def build_project(t, key, wide=False):
     title, status, desc, tags = PROJECTS[key]
     CW, H, PAD = 412, 196, 10  # PAD: transparent space under each card so rows do not touch
-    lines = textwrap.wrap(desc, 48, break_on_hyphens=False)
+    if wide:
+        CW, H = W, 160
+    lines = textwrap.wrap(desc, 100 if wide else 48, break_on_hyphens=False)
     txt = "".join(f'<tspan x="20" dy="{0 if j == 0 else 20}">{e(l)}</tspan>' for j, l in enumerate(lines))
     cx = 20
     chips = []
@@ -540,8 +592,9 @@ def main():
             "career.svg": build_career(t),
             "hobbies.svg": build_hobbies(t),
         }
+        files["internal.svg"] = build_internal(t)
         for k in PROJECTS:
-            files[f"project-{k}.svg"] = build_project(t, k)
+            files[f"project-{k}.svg"] = build_project(t, k, wide=(k == "pharmaiq"))
         for k, (n, ti, sub) in heads.items():
             files[f"{k}.svg"] = build_heading(t, n, ti, sub)
         for fn, content in files.items():
