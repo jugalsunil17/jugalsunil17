@@ -1,6 +1,6 @@
 <div align="center">
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/header.svg"/><img src="assets/light/header.svg" alt="Jugal Sunil, AI Engineer in Tokyo, Japan"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner.svg"/><img src="assets/light/banner.svg" alt="Jugal Sunil, AI Engineer in Tokyo, Japan"/></picture>
 
 <a href="https://www.linkedin.com/in/jugalsunil"><img src="https://img.shields.io/badge/LinkedIn-jugalsunil-4f46e5?style=flat-square" alt="LinkedIn"/></a>
 <a href="mailto:jpjugalsunil@gmail.com"><img src="https://img.shields.io/badge/Email-jpjugalsunil%40gmail.com-0f766e?style=flat-square&logo=gmail&logoColor=white" alt="Email"/></a>

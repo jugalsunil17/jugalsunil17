@@ -2,7 +2,7 @@
 
 Run:  python3 tools/build_assets.py   (needs Pillow: pip install pillow)
 Writes assets/light/*.svg and assets/dark/*.svg.
-The header photo is read from assets/avatar.jpg and embedded (resized) in header.svg.
+The header photo is read from assets/avatar.jpg and embedded (resized) in banner.svg.
 All SVGs are drawn on an 840px wide canvas, close to GitHub's README column,
 so font sizes here are roughly the sizes people actually see.
 """
@@ -484,7 +484,7 @@ def main():
             if old.endswith(".svg"):
                 os.remove(os.path.join(d, old))
         files = {
-            "header.svg": build_header(t),
+            "banner.svg": build_header(t),
             "whoami.svg": build_whoami(t),
             "work.svg": build_work(t),
             "stack.svg": build_stack(t),
