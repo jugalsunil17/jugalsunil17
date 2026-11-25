@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img">
+<style>
+.sans{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', 'Hiragino Sans', Helvetica, Arial, sans-serif;}
+.mono{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;}
+</style>
+
+<defs>
+  <radialGradient id="avabg" cx="35%" cy="30%" r="80%">
+    <stop offset="0" stop-color="#1e2a5a"/><stop offset="0.6" stop-color="#0f1b3d"/><stop offset="1" stop-color="#071022"/>
+  </radialGradient>
+  <linearGradient id="avaskin" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#d9a074"/><stop offset="1" stop-color="#b97a52"/>
+  </linearGradient>
+  <linearGradient id="avametal" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#e3e8ee"/><stop offset="0.55" stop-color="#a9b3bf"/><stop offset="1" stop-color="#6b7684"/>
+  </linearGradient>
+  <radialGradient id="avalens" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#ffffff"/><stop offset="0.25" stop-color="#7ff5e6"/><stop offset="0.7" stop-color="#14b8a6"/><stop offset="1" stop-color="#0b4f4a"/>
+  </radialGradient>
+  <filter id="avaglow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <clipPath id="avaL"><polygon points="0,0 256,60 263,120 251,175 263,230 250,290 262,345 252,400 260,460 256,512 0,512"/></clipPath>
+  <clipPath id="avaR"><polygon points="512,0 256,60 263,120 251,175 263,230 250,290 262,345 252,400 260,460 256,512 512,512"/></clipPath>
+  <clipPath id="avaC"><circle cx="256" cy="256" r="256"/></clipPath>
+</defs>
+<g transform="translate(0.0,0.0) scale(1.0)">
+<g >
+  <rect width="512" height="512" fill="url(#avabg)"/>
+  <g stroke="#2dd4bf" stroke-opacity="0.10" stroke-width="1">
+    <path d="M0,96 H512 M0,192 H512 M0,288 H512 M0,384 H512 M96,0 V512 M192,0 V512 M320,0 V512 M416,0 V512"/>
+  </g>
+  <circle cx="256" cy="256" r="228" fill="none" stroke="#818cf8" stroke-opacity="0.25" stroke-width="2" stroke-dasharray="4 10">
+    <animateTransform attributeName="transform" type="rotate" from="0 256 256" to="360 256 256" dur="60s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- ===== HUMAN (left) ===== -->
+  <g clip-path="url(#avaL)">
+    <path d="M150,512 C150,470 190,448 256,446 L256,512 Z" fill="#1f3864"/>
+    <path d="M60,512 C66,466 120,446 200,440 L256,446 L256,512 Z" fill="#1f3864"/>
+    <path d="M196,440 C214,470 238,478 256,478 L256,446 Z" fill="#162a4d"/>
+    <rect x="212" y="392" width="60" height="70" fill="#b97a52"/>
+    <ellipse cx="131" cy="276" rx="15" ry="27" fill="#c98b62"/>
+    <path d="M256,112 C330,112 382,160 384,240 C386,300 372,350 340,392 C315,422 288,436 256,436 C224,436 197,422 172,392 C140,350 126,300 128,240 C130,160 182,112 256,112 Z" fill="url(#avaskin)"/>
+    <path d="M116,268 C100,170 150,90 252,84 C292,82 304,104 300,120 C270,112 240,118 214,132 C186,148 164,170 152,198 C146,214 142,232 141,248 C139,258 136,266 132,274 C126,274 120,272 116,268 Z" fill="#17120f"/>
+    <g stroke="#3a2c22" stroke-width="3" fill="none" stroke-linecap="round"><path d="M132,200 C140,160 170,128 210,114"/><path d="M178,104 C200,96 226,94 248,96"/><path d="M124,236 C124,214 128,196 136,182"/></g>
+    <path d="M150,150 C170,110 210,96 250,98" stroke="#3a2c22" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M172,240 Q200,226 234,236" stroke="#1d1410" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <path d="M178,264 Q206,247 234,264 Q206,279 178,264 Z" fill="#fbf7f2"/>
+    <circle cx="207" cy="263" r="10" fill="#3b2416"/>
+    <circle cx="207" cy="263" r="4.5" fill="#0b0705"/>
+    <circle cx="210" cy="259" r="2.6" fill="#ffffff"/>
+    <path d="M178,264 Q206,247 234,264" stroke="#1d1410" stroke-width="2.5" fill="none"/>
+    <path d="M249,272 L238,318 Q246,326 258,322" stroke="#8f5a3c" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M206,356 Q232,374 258,366" stroke="#7a3e2e" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M168,330 C176,380 210,420 256,424" stroke="#9a6545" stroke-opacity="0.35" stroke-width="10" fill="none"/>
+  </g>
+
+  <!-- ===== ROBOT (right) ===== -->
+  <g clip-path="url(#avaR)">
+    <path d="M256,446 C330,448 380,466 452,512 L256,512 Z" fill="#3d4652"/>
+    <path d="M300,470 L420,500 M290,490 L380,512" stroke="#5b6573" stroke-width="3"/>
+    <rect x="240" y="392" width="62" height="74" fill="#59636e"/>
+    <g stroke="#3d4652" stroke-width="3"><path d="M240,410 H302 M240,426 H302 M240,442 H302"/></g>
+    <circle cx="393" cy="276" r="22" fill="url(#avametal)" stroke="#4b5563" stroke-width="2"/>
+    <circle cx="395" cy="276" r="10" fill="none" stroke="#2dd4bf" stroke-width="3" filter="url(#avaglow)"/>
+    <path d="M256,112 C330,112 382,160 384,240 C386,300 372,350 340,392 C315,422 288,436 256,436 C224,436 197,422 172,392 C140,350 126,300 128,240 C130,160 182,112 256,112 Z" fill="url(#avametal)"/>
+    <path d="M256,112 C330,112 382,160 384,240" fill="none" stroke="#ffffff" stroke-opacity="0.55" stroke-width="3"/>
+    <g fill="none" stroke="#5b6573" stroke-width="2.2">
+      <path d="M256,196 H338 L372,222"/>
+      <path d="M256,300 H292 L312,318 H368"/>
+      <path d="M256,388 H300 L330,410"/>
+      <path d="M350,150 L340,196"/>
+    </g>
+    <path d="M276,236 L340,231" stroke="#3d4652" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="307" cy="264" r="25" fill="#0d1117" stroke="#4b5563" stroke-width="3"/>
+    <circle cx="307" cy="264" r="15" fill="url(#avalens)" filter="url(#avaglow)">
+      <animate attributeName="r" values="14;16;14" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="303" cy="260" r="3.5" fill="#ffffff"/>
+    <g stroke="#3d4652" stroke-width="3" stroke-linecap="round">
+      <path d="M306,330 H348 M310,340 H346 M316,350 H342"/>
+    </g>
+    <rect x="256" y="355" width="46" height="18" rx="4" fill="#1f2630"/>
+    <g stroke="#2dd4bf" stroke-width="2.5" stroke-linecap="round" opacity="0.9">
+      <path d="M266,359 V369 M276,359 V369 M286,359 V369 M296,359 V369"/>
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="2.4s" repeatCount="indefinite"/>
+    </g>
+    <g fill="none" stroke="#2dd4bf" stroke-width="2.5" filter="url(#avaglow)">
+      <path d="M256,160 H296 L314,142 H336"/>
+      <path d="M256,410 H286 L300,396"/>
+    </g>
+    <g fill="#2dd4bf"><circle cx="338" cy="142" r="4"/><circle cx="302" cy="394" r="4"/></g>
+    <g fill="#4b5563"><circle cx="362" cy="214" r="4"/><circle cx="368" cy="302" r="4"/><circle cx="334" cy="388" r="4"/><circle cx="296" cy="130" r="4"/></g>
+  </g>
+
+  <!-- seam -->
+  <polyline points="256,92 263,120 251,175 263,230 250,290 262,345 252,400 260,446" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-linejoin="round" filter="url(#avaglow)">
+    <animate attributeName="stroke-opacity" values="0.55;1;0.55" dur="3s" repeatCount="indefinite"/>
+  </polyline>
+</g>
+<circle cx="256" cy="256" r="244" fill="none" stroke="#818cf8" stroke-opacity="0.55" stroke-width="4"/>
+</g>
+
+</svg>
