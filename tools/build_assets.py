@@ -5,7 +5,9 @@ Writes assets/light/*.svg, assets/dark/*.svg and assets/avatar.svg.
 All SVGs are drawn on an 840px wide canvas, close to GitHub's README column,
 so font sizes here are roughly the sizes people actually see.
 """
+import math
 import os
+import random
 import textwrap
 from xml.sax.saxutils import escape
 
@@ -64,113 +66,183 @@ def card(x, y, w, h, t, rx=14):
 
 # ---------------------------------------------------------------- avatar
 def avatar_body(cx=256, cy=256, scale=1.0, clip_circle=True, uid="av"):
-    """Half human / half robot face, drawn on a 512x512 canvas."""
-    seam = "256,60 263,120 251,175 263,230 250,290 262,345 252,400 260,460 256,512"
+    """Half human / half robot portrait on a 512x512 canvas (dark, serious style)."""
+    rnd = random.Random(7)
+
+    seam_pts = [(256, 60), (258, 96), (252, 128), (260, 160), (251, 196), (259, 236), (252, 272),
+                (261, 306), (253, 344), (259, 384), (254, 420), (258, 452), (256, 512)]
+    seam = " ".join(f"{x},{y}" for x, y in seam_pts)
     left_clip = f"0,0 {seam} 0,512"
     right_clip = f"512,0 {seam} 512,512"
-    head = ("M256,112 C330,112 382,160 384,240 C386,300 372,350 340,392 "
-            "C315,422 288,436 256,436 C224,436 197,422 172,392 C140,350 126,300 128,240 "
-            "C130,160 182,112 256,112 Z")
-    g = f'''
+
+    head = ("M256,100 C318,100 362,140 368,205 C372,245 371,282 366,318 C360,356 350,380 334,400 "
+            "C314,424 290,442 256,444 C222,442 198,424 178,400 C162,380 152,356 146,318 "
+            "C141,282 140,245 144,205 C150,140 194,100 256,100 Z")
+    beard = ("M140,262 C150,300 176,326 214,342 L220,354 C228,372 242,378 256,378 L256,452 "
+             "C220,450 194,432 174,406 C158,386 148,352 144,318 Z")
+    moustache = ("M256,332 C243,330 229,334 217,345 C214,349 216,353 221,352 C232,346 244,344 256,346 Z")
+
+    # beard texture: short strokes, denser and darker lower down
+    strokes = []
+    for _ in range(520):
+        x = rnd.uniform(140, 256)
+        y = rnd.uniform(270, 452)
+        ang = rnd.uniform(1.2, 1.9)
+        ln = rnd.uniform(4, 9)
+        x2 = x + math.cos(ang) * ln * (1 if x < 200 else 0.6)
+        y2 = y + math.sin(ang) * ln
+        op = 0.25 + 0.5 * (y - 270) / 182
+        col = "#2b221c" if rnd.random() < 0.6 else "#0a0807"
+        strokes.append(f'<path d="M{x:.1f},{y:.1f} L{x2:.1f},{y2:.1f}" stroke="{col}" stroke-opacity="{op:.2f}"/>')
+
+    # hair strands following the curtain flow (part at centre, sweeping out and back)
+    strands = []
+    for i in range(22):
+        k = i / 21
+        sx = 257 - k * 3
+        sy = 96 + k * 12
+        ex = 124 + k * 30 + rnd.uniform(-3, 3)
+        ey = 150 + k * 80
+        c1x, c1y = 226 - k * 10, 60 + k * 40
+        c2x, c2y = 150 + k * 10, 70 + k * 70
+        col = "#2e2622" if i % 3 == 0 else "#1c1715"
+        strands.append(f'<path d="M{sx:.1f},{sy:.1f} C{c1x:.1f},{c1y:.1f} {c2x:.1f},{c2y:.1f} {ex:.1f},{ey:.1f}" '
+                       f'stroke="{col}" stroke-width="{1.0 if i % 3 else 1.4}" fill="none" stroke-linecap="round" opacity="0.7"/>')
+
+    return f'''
 <defs>
-  <radialGradient id="{uid}bg" cx="35%" cy="30%" r="80%">
-    <stop offset="0" stop-color="#1e2a5a"/><stop offset="0.6" stop-color="#0f1b3d"/><stop offset="1" stop-color="#071022"/>
+  <radialGradient id="{uid}bg" cx="50%" cy="40%" r="75%">
+    <stop offset="0" stop-color="#1b1f27"/><stop offset="0.55" stop-color="#0c0e13"/><stop offset="1" stop-color="#030405"/>
   </radialGradient>
-  <linearGradient id="{uid}skin" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#d9a074"/><stop offset="1" stop-color="#b97a52"/>
+  <linearGradient id="{uid}skin" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#6e4329"/><stop offset="0.18" stop-color="#a8704c"/><stop offset="0.55" stop-color="#b98159"/><stop offset="1" stop-color="#8a5a3c"/>
   </linearGradient>
-  <linearGradient id="{uid}metal" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#e3e8ee"/><stop offset="0.55" stop-color="#a9b3bf"/><stop offset="1" stop-color="#6b7684"/>
+  <linearGradient id="{uid}skinv" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="0.7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.35"/>
   </linearGradient>
-  <radialGradient id="{uid}lens" cx="50%" cy="50%" r="50%">
-    <stop offset="0" stop-color="#ffffff"/><stop offset="0.25" stop-color="#7ff5e6"/><stop offset="0.7" stop-color="#14b8a6"/><stop offset="1" stop-color="#0b4f4a"/>
+  <linearGradient id="{uid}beardfade" x1="0" y1="0" x2="0.35" y2="1">
+    <stop offset="0" stop-color="#16110e" stop-opacity="0.25"/><stop offset="0.28" stop-color="#16110e" stop-opacity="0.75"/><stop offset="0.55" stop-color="#120e0c" stop-opacity="0.95"/><stop offset="1" stop-color="#0d0a08" stop-opacity="1"/>
+  </linearGradient>
+  <linearGradient id="{uid}hair" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#1c1715"/><stop offset="1" stop-color="#0b0908"/>
+  </linearGradient>
+  <linearGradient id="{uid}metal" x1="0" y1="0" x2="1" y2="0.4">
+    <stop offset="0" stop-color="#8a939e"/><stop offset="0.35" stop-color="#4b535d"/><stop offset="0.75" stop-color="#262b32"/><stop offset="1" stop-color="#14171b"/>
+  </linearGradient>
+  <linearGradient id="{uid}metal2" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#6b737d"/><stop offset="1" stop-color="#1d2127"/>
+  </linearGradient>
+  <linearGradient id="{uid}cloth" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#262a31"/><stop offset="1" stop-color="#07080a"/>
+  </linearGradient>
+  <radialGradient id="{uid}eye" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#fff2e8"/><stop offset="0.22" stop-color="#ff5a3c"/><stop offset="0.6" stop-color="#d4141c"/><stop offset="1" stop-color="#4a0508"/>
   </radialGradient>
-  <filter id="{uid}glow" x="-50%" y="-50%" width="200%" height="200%">
-    <feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-  </filter>
+  <radialGradient id="{uid}eyeglow" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#ff2a1f" stop-opacity="0.55"/><stop offset="1" stop-color="#ff2a1f" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="{uid}blur" filterUnits="userSpaceOnUse" x="0" y="0" width="512" height="512"><feGaussianBlur stdDeviation="3"/></filter>
+  <filter id="{uid}haze" filterUnits="userSpaceOnUse" x="-200" y="-200" width="912" height="912"><feGaussianBlur stdDeviation="45"/></filter>
+  <filter id="{uid}soft" filterUnits="userSpaceOnUse" x="0" y="0" width="512" height="512"><feGaussianBlur stdDeviation="1.2"/></filter>
   <clipPath id="{uid}L"><polygon points="{left_clip}"/></clipPath>
   <clipPath id="{uid}R"><polygon points="{right_clip}"/></clipPath>
   <clipPath id="{uid}C"><circle cx="256" cy="256" r="256"/></clipPath>
+  <clipPath id="{uid}H"><path d="M258,104 C244,84 206,76 172,92 C142,108 126,142 126,180 C126,214 130,250 142,292 C143,262 146,228 152,204 C160,180 176,160 198,144 C216,130 238,118 258,116 Z"/></clipPath>
+  <clipPath id="{uid}E"><path d="M180,264 C194,255 214,252 232,258 C216,266 196,268 180,264 Z"/></clipPath>
+  <clipPath id="{uid}B"><path d="{beard}"/></clipPath>
 </defs>
 <g transform="translate({cx - 256*scale},{cy - 256*scale}) scale({scale})">
 <g {'clip-path="url(#' + uid + 'C)"' if clip_circle else ''}>
   <rect width="512" height="512" fill="url(#{uid}bg)"/>
-  <g stroke="#2dd4bf" stroke-opacity="0.10" stroke-width="1">
-    <path d="M0,96 H512 M0,192 H512 M0,288 H512 M0,384 H512 M96,0 V512 M192,0 V512 M320,0 V512 M416,0 V512"/>
-  </g>
-  <circle cx="256" cy="256" r="228" fill="none" stroke="#818cf8" stroke-opacity="0.25" stroke-width="2" stroke-dasharray="4 10">
-    <animateTransform attributeName="transform" type="rotate" from="0 256 256" to="360 256 256" dur="60s" repeatCount="indefinite"/>
-  </circle>
+  <ellipse cx="470" cy="250" rx="120" ry="220" fill="#ff2a1f" opacity="0.16" filter="url(#{uid}haze)"/>
+  <ellipse cx="40" cy="250" rx="110" ry="220" fill="#5eead4" opacity="0.08" filter="url(#{uid}haze)"/>
 
   <!-- ===== HUMAN (left) ===== -->
   <g clip-path="url(#{uid}L)">
-    <path d="M150,512 C150,470 190,448 256,446 L256,512 Z" fill="#1f3864"/>
-    <path d="M60,512 C66,466 120,446 200,440 L256,446 L256,512 Z" fill="#1f3864"/>
-    <path d="M196,440 C214,470 238,478 256,478 L256,446 Z" fill="#162a4d"/>
-    <rect x="212" y="392" width="60" height="70" fill="#b97a52"/>
-    <ellipse cx="131" cy="276" rx="15" ry="27" fill="#c98b62"/>
+    <path d="M186,404 C190,430 186,452 176,470 L256,478 L256,420 Z" fill="#7d5034"/>
+    <path d="M206,432 C218,452 232,466 248,476" stroke="#4a2c1c" stroke-width="5" stroke-opacity="0.5" fill="none" filter="url(#{uid}soft)"/>
+    <path d="M186,418 C176,438 152,444 122,446 L188,458 Z" fill="#1e2126"/>
+    <path d="M0,512 L0,458 C48,442 104,436 150,442 C168,445 180,452 188,458 L256,468 L256,512 Z" fill="url(#{uid}cloth)"/>
+    <path d="M0,458 C48,442 104,436 150,442" stroke="#4a515b" stroke-width="2" fill="none"/>
+    <path d="M166,482 C196,474 228,472 256,472 M160,496 C192,488 226,486 256,486" stroke="#24282e" stroke-width="2" fill="none"/>
+    <ellipse cx="139" cy="288" rx="13" ry="27" fill="#8a5a3c"/>
+    <path d="M136,272 C132,284 134,298 140,306" stroke="#5a3624" stroke-width="3" fill="none"/>
     <path d="{head}" fill="url(#{uid}skin)"/>
-    <path d="M116,268 C100,170 150,90 252,84 C292,82 304,104 300,120 C270,112 240,118 214,132 C186,148 164,170 152,198 C146,214 142,232 141,248 C139,258 136,266 132,274 C126,274 120,272 116,268 Z" fill="#17120f"/>
-    <g stroke="#3a2c22" stroke-width="3" fill="none" stroke-linecap="round"><path d="M132,200 C140,160 170,128 210,114"/><path d="M178,104 C200,96 226,94 248,96"/><path d="M124,236 C124,214 128,196 136,182"/></g>
-    <path d="M150,150 C170,110 210,96 250,98" stroke="#3a2c22" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <path d="M172,240 Q200,226 234,236" stroke="#1d1410" stroke-width="8" fill="none" stroke-linecap="round"/>
-    <path d="M178,264 Q206,247 234,264 Q206,279 178,264 Z" fill="#fbf7f2"/>
-    <circle cx="207" cy="263" r="10" fill="#3b2416"/>
-    <circle cx="207" cy="263" r="4.5" fill="#0b0705"/>
-    <circle cx="210" cy="259" r="2.6" fill="#ffffff"/>
-    <path d="M178,264 Q206,247 234,264" stroke="#1d1410" stroke-width="2.5" fill="none"/>
-    <path d="M249,272 L238,318 Q246,326 258,322" stroke="#8f5a3c" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M206,356 Q232,374 258,366" stroke="#7a3e2e" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <path d="M168,330 C176,380 210,420 256,424" stroke="#9a6545" stroke-opacity="0.35" stroke-width="10" fill="none"/>
+    <path d="{head}" fill="url(#{uid}skinv)"/>
+    <path d="M150,300 C168,318 196,326 224,322" stroke="#5a3624" stroke-opacity="0.2" stroke-width="10" fill="none" filter="url(#{uid}soft)"/>
+    <g clip-path="url(#{uid}B)">
+      <path d="{beard}" fill="url(#{uid}beardfade)"/>
+      <g stroke-width="1.3" stroke-linecap="round">{''.join(strokes)}</g>
+    </g>
+    <path d="M228,366 C236,365 246,364 256,364" stroke="#5c2f25" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M232,372 C240,374 248,374 256,373" stroke="#7a4434" stroke-width="2" fill="none" opacity="0.7"/>
+    <path d="{moustache}" fill="#0f0b09"/>
+    <path d="M248,252 C247,272 244,296 238,314 C236,320 240,324 246,324" stroke="#5a3624" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M232,318 C226,320 226,328 234,330 C240,332 248,330 256,330" stroke="#4a2c1c" stroke-width="2.6" fill="none"/>
+    <path d="M252,300 C254,306 254,312 252,316" stroke="#d8a27a" stroke-width="3" opacity="0.5" fill="none"/>
+    <path d="M180,264 C194,255 214,252 232,258 C216,266 196,268 180,264 Z" fill="#b3a89c"/>
+    <g clip-path="url(#{uid}E)"><circle cx="208" cy="259" r="9" fill="#2a170d"/><circle cx="208" cy="259" r="3.4" fill="#050302"/>
+      <path d="M180,258 C196,252 216,250 232,256 L232,250 L180,250 Z" fill="#000" opacity="0.35"/></g>
+    <circle cx="211" cy="256.5" r="1.6" fill="#fff" opacity="0.85"/>
+    <path d="M176,262 C190,252 214,248 236,256" stroke="#0d0907" stroke-width="4.2" fill="none" stroke-linecap="round"/>
+    <path d="M182,268 C198,273 216,271 230,263" stroke="#4a2c1c" stroke-width="2" fill="none" opacity="0.8"/>
+    <path d="M160,243 C180,231 206,228 222,232 C234,235 242,242 247,251 C234,245 220,241 206,241 C190,241 174,243 160,243 Z" fill="#0c0908"/>
+    <path d="M258,104 C244,84 206,76 172,92 C142,108 126,142 126,180 C126,214 130,250 142,292 C143,262 146,228 152,204 C160,180 176,160 198,144 C216,130 238,118 258,116 Z" fill="url(#{uid}hair)"/>
+    <g clip-path="url(#{uid}H)">{''.join(strands)}</g>
+
   </g>
 
   <!-- ===== ROBOT (right) ===== -->
   <g clip-path="url(#{uid}R)">
-    <path d="M256,446 C330,448 380,466 452,512 L256,512 Z" fill="#3d4652"/>
-    <path d="M300,470 L420,500 M290,490 L380,512" stroke="#5b6573" stroke-width="3"/>
-    <rect x="240" y="392" width="62" height="74" fill="#59636e"/>
-    <g stroke="#3d4652" stroke-width="3"><path d="M240,410 H302 M240,426 H302 M240,442 H302"/></g>
-    <circle cx="393" cy="276" r="22" fill="url(#{uid}metal)" stroke="#4b5563" stroke-width="2"/>
-    <circle cx="395" cy="276" r="10" fill="none" stroke="#2dd4bf" stroke-width="3" filter="url(#{uid}glow)"/>
+    <path d="M256,452 L336,446 C400,456 460,472 512,488 L512,512 L256,512 Z" fill="#14171b"/>
+    <path d="M330,452 L420,470 L470,500 L512,505 M300,470 L380,490 L420,512" stroke="#3a4048" stroke-width="3" fill="none"/>
+    <path d="M300,458 L392,472" stroke="#ff2a1f" stroke-opacity="0.35" stroke-width="1.5"/>
+    <g>
+      <rect x="252" y="398" width="66" height="72" fill="#1b1f24"/>
+      <path d="M262,402 V466 M276,402 V466 M290,402 V466 M304,402 V466" stroke="#3d444d" stroke-width="5"/>
+      <path d="M268,410 C280,430 270,450 284,466" stroke="#0b0d10" stroke-width="6" fill="none"/>
+      <path d="M296,410 C306,432 298,452 310,466" stroke="#0b0d10" stroke-width="6" fill="none"/>
+    </g>
+    <circle cx="372" cy="288" r="20" fill="url(#{uid}metal2)" stroke="#0d0f12" stroke-width="3"/>
+    <circle cx="372" cy="288" r="8" fill="#0d0f12"/><circle cx="372" cy="288" r="3" fill="#ff2a1f"/>
     <path d="{head}" fill="url(#{uid}metal)"/>
-    <path d="M256,112 C330,112 382,160 384,240" fill="none" stroke="#ffffff" stroke-opacity="0.55" stroke-width="3"/>
-    <g fill="none" stroke="#5b6573" stroke-width="2.2">
-      <path d="M256,196 H338 L372,222"/>
-      <path d="M256,300 H292 L312,318 H368"/>
-      <path d="M256,388 H300 L330,410"/>
-      <path d="M350,150 L340,196"/>
+    <path d="M256,100 C318,100 362,140 368,205" fill="none" stroke="#c9d1da" stroke-opacity="0.45" stroke-width="2.5"/>
+    <path d="M268,118 C300,112 330,124 346,146" fill="none" stroke="#e6ebf0" stroke-opacity="0.25" stroke-width="6" filter="url(#{uid}soft)"/>
+    <g fill="none" stroke="#0e1114" stroke-width="2.4">
+      <path d="M256,170 H330 L356,190"/>
+      <path d="M300,100 L292,170"/>
+      <path d="M356,214 L340,300 L362,330"/>
+      <path d="M256,290 H284 L300,282"/>
     </g>
-    <path d="M276,236 L340,231" stroke="#3d4652" stroke-width="8" stroke-linecap="round"/>
-    <circle cx="307" cy="264" r="25" fill="#0d1117" stroke="#4b5563" stroke-width="3"/>
-    <circle cx="307" cy="264" r="15" fill="url(#{uid}lens)" filter="url(#{uid}glow)">
-      <animate attributeName="r" values="14;16;14" dur="3s" repeatCount="indefinite"/>
+    <g fill="#0e1114"><path d="M320,140 h22 v3 h-22z M322,148 h22 v3 h-22z M324,156 h22 v3 h-22z"/></g>
+    <path d="M300,300 C320,300 338,312 344,330 L336,402 C322,420 296,436 266,440 L262,380 C286,372 300,350 300,330 Z" fill="#101317"/>
+    <g stroke="#59616b" stroke-width="5" stroke-linecap="round">
+      <path d="M316,312 L304,396"/><path d="M332,320 L322,394"/>
+    </g>
+    <g stroke="#8a939e" stroke-width="2"><path d="M316,312 L310,352"/><path d="M332,320 L327,354"/></g>
+    <path d="M257,355 L313,351 L313,374 L257,377 Z" fill="#050607"/>
+    <g fill="#7a838d"><path d="M259,359 h8 v11 h-8z M270,358.6 h8 v11 h-8z M281,358.2 h8 v11 h-8z M292,357.8 h8 v11 h-8z M303,357.4 h8 v11 h-8z"/></g>
+    <path d="M258,300 L272,326 L258,330 Z" fill="#050607"/>
+    <ellipse cx="308" cy="262" rx="34" ry="24" fill="#050607"/>
+    <circle cx="308" cy="262" r="34" fill="url(#{uid}eyeglow)"/>
+    <circle cx="308" cy="262" r="12" fill="url(#{uid}eye)">
+      <animate attributeName="r" values="11;13;11" dur="2.6s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="303" cy="260" r="3.5" fill="#ffffff"/>
-    <g stroke="#3d4652" stroke-width="3" stroke-linecap="round">
-      <path d="M306,330 H348 M310,340 H346 M316,350 H342"/>
-    </g>
-    <rect x="256" y="355" width="46" height="18" rx="4" fill="#1f2630"/>
-    <g stroke="#2dd4bf" stroke-width="2.5" stroke-linecap="round" opacity="0.9">
-      <path d="M266,359 V369 M276,359 V369 M286,359 V369 M296,359 V369"/>
-      <animate attributeName="opacity" values="0.4;1;0.4" dur="2.4s" repeatCount="indefinite"/>
-    </g>
-    <g fill="none" stroke="#2dd4bf" stroke-width="2.5" filter="url(#{uid}glow)">
-      <path d="M256,160 H296 L314,142 H336"/>
-      <path d="M256,410 H286 L300,396"/>
-    </g>
-    <g fill="#2dd4bf"><circle cx="338" cy="142" r="4"/><circle cx="302" cy="394" r="4"/></g>
-    <g fill="#4b5563"><circle cx="362" cy="214" r="4"/><circle cx="368" cy="302" r="4"/><circle cx="334" cy="388" r="4"/><circle cx="296" cy="130" r="4"/></g>
+    <circle cx="304" cy="258" r="2.4" fill="#fff"/>
+    <path d="M266,244 C282,236 310,230 348,236 L350,246 C318,242 290,244 268,252 Z" fill="#2a3037" stroke="#0b0d10" stroke-width="1.5"/>
+    <path d="M268,244 C290,236 318,233 346,237" stroke="#9aa3ad" stroke-width="1.2" fill="none" opacity="0.7"/>
+    <g fill="#0b0d10"><circle cx="350" cy="198" r="3.5"/><circle cx="356" cy="330" r="3.5"/><circle cx="276" cy="140" r="3.5"/><circle cx="330" cy="408" r="3.5"/></g>
   </g>
 
-  <!-- seam -->
-  <polyline points="256,92 263,120 251,175 263,230 250,290 262,345 252,400 260,446" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-linejoin="round" filter="url(#{uid}glow)">
-    <animate attributeName="stroke-opacity" values="0.55;1;0.55" dur="3s" repeatCount="indefinite"/>
+  <!-- seam: torn skin edge + red glow -->
+  <polyline points="{" ".join(f"{x-2},{y}" for x, y in seam_pts[1:-1])}" fill="none" stroke="#3b1f14" stroke-width="3" stroke-linejoin="round"/>
+  <polyline points="{" ".join(f"{x+1},{y}" for x, y in seam_pts[1:-1])}" fill="none" stroke="#ff2a1f" stroke-width="1.6" stroke-linejoin="round" opacity="0.8" filter="url(#{uid}soft)">
+    <animate attributeName="opacity" values="0.5;0.95;0.5" dur="3s" repeatCount="indefinite"/>
   </polyline>
 </g>
-<circle cx="256" cy="256" r="244" fill="none" stroke="#818cf8" stroke-opacity="0.55" stroke-width="4"/>
+<circle cx="256" cy="256" r="244" fill="none" stroke="#2b3038" stroke-width="3"/>
 </g>
 '''
-    return g
 
 
 def build_avatar():
